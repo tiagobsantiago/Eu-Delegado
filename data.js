@@ -50,3 +50,25 @@ const GATE = 80; // % mínimo para avançar de tema (método em camadas, Estrat�
 
 // Banco local de questões (importado dos PDFs do TEC no Drive). Os arquivos ficam em banco/, fora do repositório público.
 const BANCO = {"const":655,"adm":601,"penal":260,"ppenal":269};
+
+// Pasta "Eu Delegado" no Drive e materiais exatos de cada dia (ordem de estudo da pasta BANCA DELEGADO).
+const DOC = (id) => `https://docs.google.com/document/d/${id}/edit`;
+const PASTA_EUD = "https://drive.google.com/drive/folders/1ctPmr4j4Kbtw05qeFsFSe2EKx3IgvioI";
+const ERROS_DOC = {
+  const: "1Ea9WmNUyUA0BHgEyT6s_n9q297zNfowm0Bk-mw0CKV8", penal: "1NSLtLFwXA01NFuxw22KQV82eoyqv4RkgY7oEJxZzKpU",
+  ppenal: "1S9rwjg91dld53RGo9ZRnltNyv0k27Z2DSfWXEIQguhc", adm: "12ss1tP-gO-jiF7MgRXtRhk3-clJAGWPebqskCFoM0xQ",
+  leg: "1oe8EF4lovapXSmBqQnvaWvG_Dn2aLRU4dqL8pIAnAns", dh: "1DYSZESVwsSw_FQ_aLNlUjeKTUuzXaLzYr-WMZW1AW7Q",
+  crim: "1cXA0nbhHSna8GXrqNPjKtOmKOuF2M6FV0ElSca-ICrA", civil: "1sfQ3UvmqGMxLybMr1O75zJ_IU5EVkG1Bn8FILLnzVKw",
+  med: "1hxID6O5j8rfMNLpBw0DJJXoBLgIpuFAZLPfAk5YJ44A",
+};
+const MATERIAL = {
+  const: [["01 - S01 - Teoria constitucional e teoria do estado", "1I1T6MIEKwhjH1qMUMiCK5kx2VFOr1U7o-99dnorqao0"], ["02 - S02 - Tutela constitucional das liberdades", "15aMuPtxikY2q0DXuCotdsJICzluJF2tsfKo_CHDNuOY"], ["03 - S02 - Direitos políticos", "1KhreBvi1UmrXu6Ei9otlq72-5TNUwqA1KfBqc_-hrM0"], ["04 - S02 - Direitos da nacionalidade", "1Lm2ej3RLs7r5hZhgtZW6KVdHrUuxD8a38XLknLfXsqM"], ["05 - S03 - Direitos e garantias fundamentais", "1lvRDg-VscYcwVrgj5qr9vZa29-frmmLKDtsOoR_57lY"], ["06 - S05 - Organização do Estado", "1WcEvNlzLYTRlWriMyHnAY2OhZHXGlw8Yy4JRQhoYP-I"], ["07 - S06 - Estado de defesa, estado de sítio e segurança pública", "1lCc_gXfMZ3o0YM09xqQlUdp-pV6EndQ_yODngF5gN7w"], ["08 - S09 - Poder Legislativo e processo legislativo", "169WTCUw0q2Q-x7QsTm7hn2R1ihYJKEPUze5CzEfBGlY"], ["09 - S12 - Poder Judiciário", "1crRyd9790sMdO2zqWxD6Dt0Mssiz9oy9TjKfXgafQBM"], ["10 - S12 - Funções essenciais à Justiça", "16ou1HQ6uD1ergxPdo4mOFc8Ejxwb_Vy2aLMGWH0sGx8"]],
+  penal: [["01 - S01 - Noções iniciais e princípios", "1wpn9diDxTgGyUr92pqLwBZ21rkZ89Npo4O4DhHVImgI"], ["02 - S02 - Aplicação da lei penal e conflito aparente de normas", "1L_tW5f1EEHoOgOOKmACK5uuNagnS0e3yn-1sR8o9Zv4"], ["03 - S03 - Teoria do crime - parte 1", "1Gl_ZjXAR66ioTNlWJnleijIvLVI97evPpRFFNZu6S8w"], ["04 - S03 - Teoria do crime - parte 2", "1qY62RFsDLUaz7Q7aFOc0AkUEQ2TRkdYxgNivOxFDJWQ"]],
+  ppenal: [["01 - S01 - Noções iniciais e princípios", "1Y4TFVzBYtzrPjj0rld_FN_aUKcYQFgzdrNquzDuwpUw"], ["02 - S02 - Inquérito policial", "1z0_YAc4MDn5j8rybQftMPBvRsKUglxTiSO6thADpN1g"], ["03 - S03 - Ação penal", "1MMdfyHxZ4coKelZbhl40osX4W2c8SSoj2Uk1g4fhpMI"]],
+  adm: [["01 - S01 - Noções iniciais e princípios", "119x2q5nCvRELCQKGAzTE2rkqndRpZJlnbCAo407sNQg"], ["02 - S04 - Entes da administração", "1MEtSK8jr09HRovflBtbQAn2IKnq97lj5BebvTPtxRe8"], ["03 - S06 - Atos administrativos", "1ZLJncX1zoADrxQL1zU59MyhQyUiMXfjkY3_d323CnKw"]],
+  leg: [["01 - S02 - Lei de lavagem de capitais", "114jVPj8gigiVEzknu0b_Hk5_UIJi3Id8J2vSJkQbQsU"], ["02 - S03 - Lei do parcelamento do solo urbano", "1xL4Isw4qPImfSgJyBeJXKvXqYJdGro0infwzegvE1jM"], ["03 - S03 - Crimes no estatuto da pessoa com deficiência", "1_kFWesoXOddU9_rJmKVdpjVxR4pLWiUU4DMBU28smcA"]],
+  dh: [["01 - S17 - Direito internacional dos direitos humanos", "1vssa-51lI2S8k3AN_yHASSnehW-CC9ruoJuLFhq9E0o"]],
+  crim: [["01 - S10 - História da criminologia, escola clássica e positivista", "1gl7n8pjL-e9JgSCqeokQG1SIu79NxFkF9HkZVjhOZv0"], ["02 - S11 - Sociologia criminal", "1s5WNd5BGF8Yr0gBt8jd7wYSQjoRhGklsmUVyEB6txY4"], ["03 - S11 - Crime organizado, classificação dos criminosos e prevenção criminal", "1t7Cw2bTh-SlwXiBH6UC9eO1nTft5pEOAYHLHY1RqD-Y"], ["04 - S18 - Instâncias de controle", "1ncuxTYmUx-Y6ieI3LOo2D4eyo5WuSPji6FUCXbkjAVw"]],
+  civil: [["01 - S02 - Constitucionalização do direito civil e LINDB", "14H3VDS55p7j1SpOQuZ3MqxcjuMq4G83NGhPT9NS910Q"], ["02 - S05 - Das pessoas", "15gb_mV-MadjmiBYshurDVNdKXXcyMHfutEItB5TsMcI"], ["03 - S05 - Dos bens", "1SoIaHr9z98QKYDwHjvmzCRkhQt5344C74tezo1k_twE"]],
+  med: [["01 - S01 - Introdução, perícias, peritos, documentos médico-legais e infortunística", "1Ws0UszqxfDhaybcwxTPcZoaZCz0LVyPSfJFo26zGpek"], ["02 - S04 - Antropologia forense", "1dmTFhr03OUhpHaMgzz7dZZNlCSDMKS3pcaEQwmXcnbc"], ["03 - S04 - Energias físicas não mecânicas", "1GHcM_fJjTxfp76mSAPv7OnGOTMLfyl1O2IZ7nXPRLZU"]],
+};

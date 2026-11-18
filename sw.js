@@ -1,4 +1,4 @@
-const V = "eu-delegado-v4";
+const V = "eu-delegado-v5";
 const FILES = ["./", "index.html", "style.css", "data.js", "tec.js", "app.js", "manifest.webmanifest", "icon.svg"];
 self.addEventListener("install", (e) => e.waitUntil(caches.open(V).then((c) => c.addAll(FILES)).then(() => self.skipWaiting())));
 self.addEventListener("activate", (e) =>

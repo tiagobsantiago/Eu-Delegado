@@ -57,6 +57,13 @@ function nextBlockDisc(t) {
   return DISCIPLINAS[((isWk(t) && !adv ? S.ptr + 1 : S.ptr)) % DISCIPLINAS.length];
 }
 
+// Material exato do dia: o n-ésimo documento da disciplina, onde n = dias já cumpridos nela. Passou do último, repete o último.
+function materialDoDia(discId) {
+  const lista = MATERIAL[discId]; if (!lista || !lista.length) return null;
+  const feitos = Object.values(S.days).filter((d) => d.advanced && d.disc != null && DISCIPLINAS[d.disc] && DISCIPLINAS[d.disc].id === discId).length;
+  return lista[Math.min(feitos, lista.length - 1)];
+}
+
 // ---------- Orçamento de tempo ----------
 const modoOf = (k) => peek(k).modo || "cheio";
 function tempo(modo) {
@@ -82,8 +89,8 @@ function tasksFor(k) {
   const dd = peek(k), disc = DISCIPLINAS[dd.disc ?? S.ptr % DISCIPLINAS.length], modo = modoOf(k), T = tempo(modo);
   const l = [{ id: "quest", t: `Questões no TEC: ${disc.nome}`, min: T.quest, q: T.meta,
     d: `Mínimo ${T.meta} para fechar o dia. Sem consulta; marque “?” nos chutes.`, url: tecUrl(disc.id), link: (tecCaderno(disc.id) || {}).nome ? "Abrir: " + tecCaderno(disc.id).nome : "Abrir cadernos do TEC" },
-  { id: "erros", t: "Registrar cada erro (tema, regra, causa)", min: T.erros, d: "Uma linha por erro. É o combustível do áudio e da arguição." }];
-  if (T.ler) l.push({ id: "ler", t: `Ler só o que errou: resumo da banca (${disc.nome})`, min: T.ler, d: "Comece por “Como cai na prova”.", url: disc.banca, link: "Abrir resumos da banca" });
+  { id: "erros", t: "Registrar cada erro (tema, regra, causa)", min: T.erros, d: "Uma linha por erro. É o combustível do áudio e da arguição.", url: ERROS_DOC[disc.id] ? DOC(ERROS_DOC[disc.id]) : PASTA_EUD, link: `Abrir Caderno de erros — ${disc.nome}` }];
+  if (T.ler) { const m = materialDoDia(disc.id); l.push({ id: "ler", t: `Ler: ${m ? m[0] : "resumo da banca (" + disc.nome + ")"}`, min: T.ler, d: "Leia ativamente, depois feche e reconstrua de memória. Só os trechos ligados aos erros.", url: m ? DOC(m[1]) : disc.banca, link: "Abrir o material de hoje" }); }
   const due = dueErrors(parse(k));
   l.push({ id: "oral", t: due.length ? `Arguição oral: ${due.length} item(ns) dos seus erros` : "Arguição oral: nada vencendo hoje", min: T.oral, auto: !due.length, d: "Diga a regra em voz alta antes de ver a resposta." });
   return l;
